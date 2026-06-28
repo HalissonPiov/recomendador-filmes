@@ -36,16 +36,49 @@ filme6 :: Filme
 filme6 = Filme "Mad Max: Estrada da Furia" Acao 2015 8.1 Maior16
 
 filme7 :: Filme
-filme7 = Filme "Os Sem-Floresta" Comedia 2006 6.7 Livre
+filme7 = Filme "Os Sem-Floresta" Animacao 2006 6.7 Livre
 
 filme8 :: Filme
-filme8 = Filme "Carros" Acao 2006 7.3 Livre
+filme8 = Filme "Carros" Animacao 2006 7.3 Livre
 
 filme9 :: Filme
 filme9 = Filme "O Jogo da Imitacao" Drama 2014 8.0 Maior12
 
+filme10 :: Filme
+filme10 = Filme "Matrix" FiccaoCientifica 1999 8.7 Maior14
+
+filme11 :: Filme
+filme11 = Filme "Vingadores: Ultimato" Acao 2019 8.4 Maior12
+
+filme12 :: Filme
+filme12 = Filme "A Origem" FiccaoCientifica 2010 8.8 Maior14
+
+filme13 :: Filme
+filme13 = Filme "Procurando Nemo" Animacao 2003 8.2 Livre
+
+filme14 :: Filme
+filme14 = Filme "Forrest Gump" Drama 1994 8.8 Maior12
+
+filme15 :: Filme
+filme15 = Filme "Todo Mundo em Panico" Comedia 2000 6.3 Maior16
+
+filme16 :: Filme
+filme16 = Filme "Se Beber, Nao Case" Comedia 2009 7.7 Maior16
+
+filme17 :: Filme
+filme17 = Filme "Invocacao do Mal" Terror 2013 7.5 Maior14
+
+filme18 :: Filme
+filme18 = Filme "It: A Coisa" Terror 2017 7.3 Maior16
+
+filme19 :: Filme
+filme19 = Filme "Homem-Aranha: No Aranhaverso" Animacao 2018 8.4 Livre
+
+filme20 :: Filme
+filme20 = Filme "Gladiador" Acao 2000 8.5 Maior16
+
 catalogo :: [Filme]
-catalogo = [filme1, filme2, filme3, filme4, filme5, filme6]
+catalogo = [filme1, filme2, filme3, filme4, filme5, filme6, filme7, filme8, filme9, filme10, filme11, filme12, filme13, filme14, filme15, filme16, filme17, filme18, filme19, filme20]
 
 tituloFilme :: Filme -> String
 tituloFilme (Filme titulo _ _ _ _) = titulo
@@ -60,7 +93,10 @@ possuiNotaMinima :: Float -> Filme -> Bool
 possuiNotaMinima notaMinima (Filme _ _ _ notaDoFilme _) = notaDoFilme >= notaMinima
 
 recomendar :: Genero -> Float -> [Filme] -> [Filme]
-recomendar genero nota filmes = undefined
+recomendar _ _ [] = []
+recomendar generoBuscado notaMinima (filme@(Filme _ generoFilme _ notaDoFilme _) : resto)
+    | generoBuscado == generoFilme && notaDoFilme >= notaMinima = filme : recomendar generoBuscado notaMinima resto
+    | otherwise = recomendar generoBuscado notaMinima resto
 
 permitidoPara :: Classificacao -> Filme -> Bool
 permitidoPara classificacaoMaxima (Filme _ _ _ _ classificacaoFilme) = classificacaoFilme <= classificacaoMaxima
