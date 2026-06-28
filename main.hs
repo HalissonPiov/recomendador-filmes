@@ -101,6 +101,8 @@ recomendar generoBuscado notaMinima (filme@(Filme _ generoFilme _ notaDoFilme _)
 permitidoPara :: Classificacao -> Filme -> Bool
 permitidoPara classificacaoMaxima (Filme _ _ _ _ classificacaoFilme) = classificacaoFilme <= classificacaoMaxima
 
--- DESAFIO
 recomendarPara :: Genero -> Float -> Classificacao -> [Filme] -> [String]
-recomendarPara genero nota classificacao filmes = undefined
+recomendarPara _ _ _ [] = []
+recomendarPara generoBuscado notaMinima classificacaoMaxima (Filme titulo generoFilme _ notaDoFilme classificacaoFilme : resto)
+    | generoBuscado == generoFilme && notaDoFilme >= notaMinima && classificacaoFilme <= classificacaoMaxima = titulo : recomendarPara generoBuscado notaMinima classificacaoMaxima resto
+    | otherwise = recomendarPara generoBuscado notaMinima classificacaoMaxima resto
