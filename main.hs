@@ -80,27 +80,90 @@ filme20 = Filme "Gladiador" Acao 2000 8.5 Maior16
 catalogo :: [Filme]
 catalogo = [filme1, filme2, filme3, filme4, filme5, filme6, filme7, filme8, filme9, filme10, filme11, filme12, filme13, filme14, filme15, filme16, filme17, filme18, filme19, filme20]
 
+-- Testes no GHCi:
+-- > tituloFilme filme1
+-- "Interestelar"
+--
+-- > tituloFilme filme2
+-- "Toy Story"
 tituloFilme :: Filme -> String
 tituloFilme (Filme titulo _ _ _ _) = titulo
 
+-- Testes no GHCi:
+-- > notaFilme filme3
+-- 9.2
+--
+-- > notaFilme filme5
+-- 5.8
 notaFilme :: Filme -> Float
 notaFilme (Filme _ _ _ nota _) = nota
 
+-- Testes no GHCi:
+-- > pertenceAoGenero FiccaoCientifica filme1
+-- True
+--
+-- > pertenceAoGenero Comedia filme1
+-- False
+--
+-- > pertenceAoGenero Animacao filme2
+-- True
 pertenceAoGenero :: Genero -> Filme -> Bool
 pertenceAoGenero generoBuscado (Filme _ generoDoFilme _ _ _) = generoBuscado == generoDoFilme
 
+-- Testes no GHCi:
+-- > possuiNotaMinima 8.0 filme1
+-- True
+--
+-- > possuiNotaMinima 8.0 filme5
+-- False
+--
+-- > possuiNotaMinima 9.0 filme3
+-- True
 possuiNotaMinima :: Float -> Filme -> Bool
 possuiNotaMinima notaMinima (Filme _ _ _ notaDoFilme _) = notaDoFilme >= notaMinima
 
+-- Testes no GHCi:
+-- > recomendar FiccaoCientifica 8.0 catalogo
+-- [Filme "Interestelar" FiccaoCientifica 2014 8.7 Maior10,Filme "Matrix" FiccaoCientifica 1999 8.7 Maior14,Filme "A Origem" FiccaoCientifica 2010 8.8 Maior14]
+--
+-- > recomendar Comedia 7.0 catalogo
+-- [Filme "Se Beber, Nao Case" Comedia 2009 7.7 Maior16]
+--
+-- > recomendar Drama 8.0 catalogo
+-- [Filme "O Poderoso Chefao" Drama 1972 9.2 Maior14,Filme "O Jogo da Imitacao" Drama 2014 8.0 Maior12,Filme "Forrest Gump" Drama 1994 8.8 Maior12]
 recomendar :: Genero -> Float -> [Filme] -> [Filme]
 recomendar _ _ [] = []
 recomendar generoBuscado notaMinima (filme@(Filme _ generoFilme _ notaDoFilme _) : resto)
     | generoBuscado == generoFilme && notaDoFilme >= notaMinima = filme : recomendar generoBuscado notaMinima resto
     | otherwise = recomendar generoBuscado notaMinima resto
 
+-- Testes no GHCi:
+-- > permitidoPara Maior12 filme1
+-- True
+--
+-- > permitidoPara Maior12 filme3
+-- False
+--
+-- > permitidoPara Livre filme2
+-- True
+--
+-- > permitidoPara Maior14 filme4
+-- True
 permitidoPara :: Classificacao -> Filme -> Bool
 permitidoPara classificacaoMaxima (Filme _ _ _ _ classificacaoFilme) = classificacaoFilme <= classificacaoMaxima
 
+-- Testes no GHCi:
+-- > recomendarPara Animacao 8.0 Livre catalogo
+-- ["Toy Story","Procurando Nemo","Homem-Aranha: No Aranhaverso"]
+--
+-- > recomendarPara Drama 8.0 Maior12 catalogo
+-- ["O Jogo da Imitacao"]
+--
+-- > recomendarPara Acao 8.0 Maior12 catalogo
+-- ["Vingadores: Ultimato"]
+--
+-- > recomendarPara Terror 8.0 Maior14 catalogo
+-- []
 recomendarPara :: Genero -> Float -> Classificacao -> [Filme] -> [String]
 recomendarPara _ _ _ [] = []
 recomendarPara generoBuscado notaMinima classificacaoMaxima (Filme titulo generoFilme _ notaDoFilme classificacaoFilme : resto)
