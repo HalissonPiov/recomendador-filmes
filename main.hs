@@ -1,4 +1,3 @@
--- PARTE 1: Tipo Algébrico
 data Genero = Acao 
     | Comedia
     | Drama
@@ -7,7 +6,6 @@ data Genero = Acao
     | Animacao
     deriving (Show, Eq, Ord) 
 
--- PARTE 2: CLASSIFICACAO INDICATIVA
 data Classificacao = Livre
     | Maior10
     | Maior12
@@ -16,7 +14,6 @@ data Classificacao = Livre
     | Maior18
     deriving (Show, Eq, Ord)
 
--- Parte 3: REPRESENTANDO UM FILME
 data Filme = Filme String Genero Int Float Classificacao
     deriving (Show, Eq)
 
@@ -50,27 +47,23 @@ filme9 = Filme "O Jogo da Imitacao" Drama 2014 8.0 Maior12
 catalogo :: [Filme]
 catalogo = [filme1, filme2, filme3, filme4, filme5, filme6]
 
--- PARTE 4: CONSULTANDO OS DADOS
 tituloFilme :: Filme -> String
 tituloFilme (Filme titulo _ _ _ _) = titulo
 
 notaFilme :: Filme -> Float
-notaFilme (Filme titulo _ _ nota _) = nota
+notaFilme (Filme _ _ _ nota _) = nota
 
 pertenceAoGenero :: Genero -> Filme -> Bool
 pertenceAoGenero generoBuscado (Filme _ generoDoFilme _ _ _) = generoBuscado == generoDoFilme
 
--- PARTE 5: RECOMENDAÇÃO POR NOTA
 possuiNotaMinima :: Float -> Filme -> Bool
 possuiNotaMinima notaMinima (Filme _ _ _ notaDoFilme _) = notaDoFilme >= notaMinima
 
--- PARTE 6: RECOMENDACAO POR GENERO E NOTA
 recomendar :: Genero -> Float -> [Filme] -> [Filme]
 recomendar genero nota filmes = undefined
 
--- PARTE 7: RECOMENDACAO POR IDADE
 permitidoPara :: Classificacao -> Filme -> Bool
-permitidoPara classificacao filme = undefined
+permitidoPara classificacaoMaxima (Filme _ _ _ _ classificacaoFilme) = classificacaoFilme <= classificacaoMaxima
 
 -- DESAFIO
 recomendarPara :: Genero -> Float -> Classificacao -> [Filme] -> [String]
