@@ -169,3 +169,27 @@ recomendarPara _ _ _ [] = []
 recomendarPara generoBuscado notaMinima classificacaoMaxima (Filme titulo generoFilme _ notaDoFilme classificacaoFilme : resto)
     | generoBuscado == generoFilme && notaDoFilme >= notaMinima && classificacaoFilme <= classificacaoMaxima = titulo : recomendarPara generoBuscado notaMinima classificacaoMaxima resto
     | otherwise = recomendarPara generoBuscado notaMinima classificacaoMaxima resto
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- QUESTÕES CONCEITUAIS
+-- 1. Qual é a função de deriving Show? 
+-- Habilitar que os valores de um tipo de dados sejam convertidos em texto e impressos na tela de forma automática. Se você tentar exibir um tipo de dado 
+-- no terminal (GHCi) sem que ele derive a classe Show, o Haskell retornará um erro indicando a ausência de uma instância para print.
+
+-- 2. Por que Genero precisa derivar Eq para ser comparado com ==? 
+-- No Haskell, o operador == é uma função definida exclusivamente para a classe de tipos Eq (com a assinatura (==) :: Eq a => a -> a -> Bool). A classe Eq 
+-- categoriza especificamente os valores que suportam testes de igualdade e diferença
+
+-- 3. Como deriving Ord determina a ordem dos gêneros e das classificações?
+-- Determina a ordem de grandeza estrutural de acordo com a sequência em que os construtores foram declarados no código. Construtores 
+-- declarados primeiro no seu tipo algébrico são considerados menores que aqueles definidos nas linhas posteriores.
+
+-- 4. Qual é a vantagem de utilizar o tipo Genero em vez de representar o gênero de um filme com uma String?
+-- A vantagem está no forte controle de estrutura através dos Tipos Algébricos. Um tipo algébrico de "soma" atua como uma alternância rigorosa 
+-- de valores válidos, enquanto se usasse String, a linguagem aceitaria qualquer texto arbitrário como gênero.
+
+-- 5. Por que o caso da lista vazia deve ser tratado na função recomendar?
+-- Quando se constroem funções manuais em Haskell para lidar com listas, o processamento ocorre por recursão varrendo os elementos. Tratar a lista vazia ([]) 
+-- estabelece o caso base necessário para que a recursão pare adequadamente, que é o padrão de uma lista vazia, gerando o retorno apropriado para evitar 
+-- erros lógicos de recursão infinita ou quebras de tipo.
